@@ -11,20 +11,20 @@ namespace Backend.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpGet]
-        //getAll Users list
-        public IEnumerable<UserDTO> GetUsers()
-        {
+        //[HttpGet]
+        ////getAll Users list
+        //public IEnumerable<UserDTO> GetUsers()
+        //{
 
-            return new string[] { "User1", "User2" };
-        }
+        //    return new string[] { "User1", "User2" };
+        //}
 
-        // GET user by Id
-        [HttpGet("{id}")]
-        public UserDTO Get(int id)
-        {
-            return "Some User";
-        }
+        //// GET user by Id
+        //[HttpGet("{id}")]
+        //public UserDTO Get(int id)
+        //{
+        //    return "Some User";
+        //}
 
         // Login method
         [HttpPost]

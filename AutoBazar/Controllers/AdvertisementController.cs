@@ -11,19 +11,19 @@ namespace Backend.Controllers
     public class AdvertisementController : ControllerBase
     {
         // GET Advertisement list
-        [HttpGet]
-        public <IEnumerable<AdvertisementDTO> GetAllAdvertisement()
-        {
-            return new string[] { "Advertisement1", "Advertisement2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<AdvertisementDTO> GetAllAdvertisement()
+        //{
+        //    return new string[] { "Advertisement1", "Advertisement2" };
+        //}
 
 
-        // GET User Advertisement
-        [HttpGet("{id}")]
-        public <IEnumerable<AdvertisementDTO> GetUserAdvertisement(int id)
-        {
-            return "Advertisement";
-        }
+        //// GET User Advertisement
+        //[HttpGet("{id}")]
+        //public IEnumerable<AdvertisementDTO> GetUserAdvertisement(int id)
+        //{
+        //    return "Advertisement";
+        //}
 
         // add Advertisement
         [HttpPost]
