@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoBazar.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,10 @@ namespace AutoBazar
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<DbUser, DbRole>(options => options.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllers();
         }
 
@@ -49,6 +54,9 @@ namespace AutoBazar
             {
                 endpoints.MapControllers();
             });
+
+            SeederDatabase.SeedData(app.ApplicationServices, env, this.Configuration);
+
         }
-    }
+}
 }
