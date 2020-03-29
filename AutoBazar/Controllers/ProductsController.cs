@@ -4,14 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoBazar.BLL.DTO;
 using AutoBazar.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace AutoBazar.Controllers
 {
+
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
