@@ -97,6 +97,9 @@ namespace AutoBazar
 
             string serverDirectory = env.ContentRootPath;
             serverDirectory = Path.Combine(serverDirectory, "Uploading");
+            if (!Directory.Exists(serverDirectory))
+                Directory.CreateDirectory(serverDirectory);
+
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(serverDirectory),
