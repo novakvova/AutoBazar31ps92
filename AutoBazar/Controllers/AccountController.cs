@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoBazar.BLL.Abstract;
 using AutoBazar.BLL.DTO;
+using AutoBazar.BLL.Services;
 using AutoBazar.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,13 +24,16 @@ namespace Backend.Controllers
         private readonly IJWTTokenService _jwtTokenService;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+        private readonly ApplicationDbContext _context;
+        private readonly CancellationToken _cancellationToken;
 
         public AccountController(
             IWebHostEnvironment env,
             IConfiguration configuration,
             UserManager<DbUser> userManager,
             SignInManager<DbUser> signInManager,
-            IJWTTokenService jWTTokenService
+            IJWTTokenService jWTTokenService,
+            ApplicationDbContext context
             )
         {
             this._configuration = configuration;
@@ -36,6 +41,7 @@ namespace Backend.Controllers
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._jwtTokenService = jWTTokenService;
+            this._context = context;
         }
         //[HttpGet]
         ////getAll Users list
@@ -75,10 +81,19 @@ namespace Backend.Controllers
             }
             var user = await _userManager.FindByEmailAsync(loginModel.Email);
             await _signInManager.SignInAsync(user, isPersistent: false);
+            var _refreshToken = AuthHelpers.GenerateRefreshToken();
+            await _context.UserRefreshTokens.AddAsync(new UserRefreshToken
+            {
+                UserId = user.Id,
+                RefreshToken = _refreshToken,
+                ExpiryDate = DateTime.UtcNow.AddMonths(1)
+            }, _cancellationToken).ConfigureAwait(false);
+            await _context.SaveChangesAsync(_cancellationToken).ConfigureAwait(false);
             return Ok(
             new
             {
-                token = _jwtTokenService.CreateToken(user)
+                token = _jwtTokenService.CreateToken(user),
+                refreshToken = _refreshToken
             });
         }
 
