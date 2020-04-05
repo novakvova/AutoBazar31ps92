@@ -17,7 +17,7 @@ namespace AutoBazar.Entities
         {
 
         }
-        //public DbSet<Consumer> Consumers { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
