@@ -65,7 +65,9 @@ namespace Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new { invalid = "Не валідна модель" });
+                return BadRequest(new {
+                    token = "",
+                    invalid = "Не валідна модель" }); 
             }
             var result = await _signInManager
                 .PasswordSignInAsync(loginModel.Email, loginModel.Password,
@@ -73,7 +75,9 @@ namespace Backend.Controllers
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { invalid = "Не правильно введені дані!" });
+                return BadRequest(new {
+                    token = "",
+                    invalid = "Не правильно введені дані!" });
             }
             var user = await _userManager.FindByEmailAsync(loginModel.Email);
             await _signInManager.SignInAsync(user, isPersistent: false);
