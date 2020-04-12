@@ -159,7 +159,7 @@ namespace AutoBazar.Controllers
             var item = _context.Products.SingleOrDefault(x => x.Id == id);
             if (item != null)
             {
-                string domain = (string)_configuration.GetValue<string>("BackendDomain");
+                string domain = (string)_configuration.GetValue<string>("AppHostName");
                 ProductEditDTO product = new ProductEditDTO()
                 {
                     Id = item.Id,
