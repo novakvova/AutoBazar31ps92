@@ -21,7 +21,7 @@ namespace AutoBazar.Entities
                 var managerRole = scope.ServiceProvider.GetRequiredService<RoleManager<DbRole>>();
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 SeedUsers(manager, managerRole);
-                SeedProducts(context);
+                //SeedProducts(context);
             }
         }
 
